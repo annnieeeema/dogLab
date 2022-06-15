@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
-import Display from './components/Display';
-import Button from './components/Button';
+import { useState } from 'react';
+import DisplayDog from './components/DisplayDog';
 import './App.css';
 
 function App() {
-  const [dog, setDog] = useState({}); 
+  const API_URL = 'https://dog.ceo/api/breeds/image/random'
+
+  const [dog, setDog] = useState(null)
 
   const getDog = async () => {
-    const response = await fetch(`https://dog.ceo/api/breeds/image/random`); 
-    const data = await response.json(); 
-    setDog(data); 
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    setDog(data.message)
   }
+
+
 
   return (
     <div className="App">
-      <h1>Random Dog Photo Generator</h1>
-      <Button searchbutton={getDog}/>
-      <Display dog={dog}/>
+      <h1>Random Dog Generator</h1>
+      <input id="button" type="button" value="Get Random Dog" onClick={getDog} /> <br />
+      <DisplayDog dog={dog} />
     </div>
   );
 }
